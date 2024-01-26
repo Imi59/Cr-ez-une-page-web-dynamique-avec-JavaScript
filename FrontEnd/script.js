@@ -31,3 +31,26 @@ allWorks.forEach(element => {
 }
 displayWorks();
 
+/***** AFFICHER LES FILTRES  *******/
+
+/*** récupérer les catégories via une fonction ******/
+
+async function getCategory () {
+    const response = await fetch ("http://localhost:5678/api/categories");
+    return await response.json(); 
+}
+getCategory();
+
+async function displayBtnCat() {
+    const allCategory = await getCategory();
+    allCategory.forEach(element => {
+        const btn = document.createElement ("button");
+        btn.textContent = element.name;
+        btn.id = element.id;
+        console.log(btn);
+        
+    });
+}
+displayBtnCat();
+
+
