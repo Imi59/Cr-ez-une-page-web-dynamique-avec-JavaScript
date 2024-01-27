@@ -189,19 +189,19 @@ footer nav ul {
 .filters {
 	display: flex;
 	justify-content: center;
+	align-items: center;
+	margin: 2em;
+	gap: 1em;
 }
-
 .filters_btn{
 	font-family: 'Syne';
 	font-weight: 700;
 	background-color: white;
 	color: #1D6154;
-	margin : 2em auto ;
-	width: 100px;
 	text-align: center;
-	border-radius: 60px ;
+	padding: 5px 10px;
+    border-radius: 25px;
 	border: 1px solid #1D6154;
-	padding: 1em;
 	cursor: pointer;
 }
 .filters_btn:hover{

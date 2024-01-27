@@ -7,6 +7,9 @@
 /** VARIABLES GLOBALES PROJET 6**/
 const sophieGallery = document.querySelector("#portfolio .gallery");
 
+const filters = document.querySelector(".filters");
+
+
 
 /* JE CREATION FONCTION POUR RECUPERER TOUS LES TRAVAUX DE SWAGGER*/
 
@@ -45,12 +48,22 @@ async function displayBtnCat() {
     const allCategory = await getCategory();
     allCategory.forEach(element => {
         const btn = document.createElement ("button");
-        btn.textContent = element.name;
+        btn.textContent = element.name.toUpperCase();
         btn.id = element.id;
-        console.log(btn);
+        btn.classList.add("filters_btn");
+        filters.appendChild(btn);  
         
     });
 }
 displayBtnCat();
+
+/*** filtrer au click */
+
+async function filtersClick() {
+
+
+    
+}
+filtersClick();
 
 
