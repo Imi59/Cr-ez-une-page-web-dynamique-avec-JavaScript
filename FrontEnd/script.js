@@ -69,6 +69,7 @@ btnsFilters.forEach(element => { /**** pour chaque éléments de mes btnsFilters
         const btnId = evenement.target.id; /**target veut dire qu on demande à afficher les id de chaque événement au click */
         /*** au click sur un boutton je veux dans un premier temps que ma gallery
          se vide donc  */ sophieGallery.innerHTML = "";
+         console.log(btnId);
          
 
     });
