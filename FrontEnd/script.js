@@ -20,21 +20,21 @@ async function getWorks() {
 getWorks();
 
 async function displayWorks() {
-    const allWorks = await getWorks();
-allWorks.forEach(element => {
-    const figure = document.createElement("figure");
-    const img = document.createElement("img");
-    const figcaption = document.createElement("figcaption");
-    img.src = element.imageUrl;
-    figcaption.textContent = element.title;
-    figure.appendChild(img);
-    figure.appendChild(figcaption);
-    sophieGallery.appendChild(figure);   
-});
-}
-displayWorks();
+    const allWorks = await  getWorks();
+    allWorks.forEach(element => {
+        const figure = document.createElement("figure");
+            const img = document.createElement("img");
+            const figcaption = document.createElement("figcaption");
+            img.src = element.imageUrl;
+            figcaption.textContent = element.title;
+            figure.appendChild(img);
+            figure.appendChild(figcaption);
+            sophieGallery.appendChild(figure);   
+    });
+    };
+  displayWorks();
 
-/***** AFFICHER LES FILTRES  *******/
+  /***** AFFICHER LES FILTRES  *******/
 
 /*** récupérer les catégories via une fonction ******/
 
@@ -44,7 +44,9 @@ async function getCategory () {
 }
 getCategory();
 
-async function displayBtnCat() {
+/**** faire apparaître les bouttons */
+
+async function displayBtnsCat() {
     const allCategory = await getCategory();
     allCategory.forEach(element => {
         const btn = document.createElement ("button");
@@ -55,28 +57,45 @@ async function displayBtnCat() {
         
     });
 }
-displayBtnCat();
-
-/*** filtrer au click */
+displayBtnsCat();
 
 async function filtersClick() {
-    const works = await getWorks(); /**j'utilise encore la fonction qui récupére tous les travaux*/
-/**** je récupére tous mes bouttons */
-const btnsFilters = document.querySelectorAll(".filters_btn");
-btnsFilters.forEach(element => { /**** pour chaque éléments de mes btnsFilters j'ajoute un événement au click */
-    element.addEventListener("click", (evenement) => {
-        /*ici je veux récupérer les id de mes btns */
-        const btnId = evenement.target.id; /**target veut dire qu on demande à afficher les id de chaque événement au click */
-        /*** au click sur un boutton je veux dans un premier temps que ma gallery
-         se vide donc  */ sophieGallery.innerHTML = "";
-         console.log(btnId);
-         
+    const works = await getWorks(); 
+    const btnsFilter = document.querySelectorAll(".filters_btn");
+    console.log(works);
+    btnsFilter.forEach(button => {
+        button.addEventListener("click", (evenement) => {
+            const btnId = evenement.target.id;
+            sophieGallery.innerHTML = "";
+            console.log(btnId);
+            if (btnId !== "0") {
+                const worksSelectCategory = works.filter((work) => { /***** la on a juste crée un "tableau
+                une constante avec les travaux filtrés en fonction de leur id donc maintenant faut les afficher */
+                return work.categoryId == btnId;
+                });
+            worksSelectCategory.forEach(element => {
+                const figure = document.createElement("figure");
+            const img = document.createElement("img");
+            const figcaption = document.createElement("figcaption");
+            img.src = element.imageUrl;
+            figcaption.textContent = element.title;
+            figure.appendChild(img);
+            figure.appendChild(figcaption);
+            sophieGallery.appendChild(figure);   
+                 });
+            }
+            else {
+                displayWorks();
+            }
+                });
 
-    });
-   
-});
-    
-}
-filtersClick();
+                
+            });
+             }  
+    filtersClick();
+        
+
+
+
 
 
