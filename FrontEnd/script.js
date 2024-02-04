@@ -62,19 +62,17 @@ displayBtnsCat();
 async function filtersClick() {
     const works = await getWorks(); 
     const btnsFilter = document.querySelectorAll(".filters_btn");
-    console.log(works);
     btnsFilter.forEach(button => {
         button.addEventListener("click", (evenement) => {
             const btnId = evenement.target.id;
             sophieGallery.innerHTML = "";
             console.log(btnId);
             if (btnId !== "0") {
-                const worksSelectCategory = works.filter((work) => { /***** la on a juste crée un "tableau
-                une constante avec les travaux filtrés en fonction de leur id donc maintenant faut les afficher */
+                const worksSelectCategory = works.filter((work) => {
                 return work.categoryId == btnId;
                 });
             worksSelectCategory.forEach(element => {
-                const figure = document.createElement("figure");
+            const figure = document.createElement("figure");
             const img = document.createElement("img");
             const figcaption = document.createElement("figcaption");
             img.src = element.imageUrl;
@@ -87,9 +85,7 @@ async function filtersClick() {
             else {
                 displayWorks();
             }
-                });
-
-                
+                });     
             });
              }  
     filtersClick();
