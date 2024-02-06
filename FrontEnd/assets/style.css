@@ -153,33 +153,13 @@ li:hover {
 	text-align: center;
 
 }
-#login > * {
-	text-align: center;
 
-}
 #contact h2{
 	margin-bottom: 20px;
 }
-#login {
-	width: 50%;
-	margin: auto;
-}
-#login > * {
-	text-align: center;
 
-}
-#login h2{
-	margin-bottom: 20px;
-	font-family: 'Syne';
 
-}
 #contact form {
-	text-align: left;
-	margin-top:30px;
-	display: flex;
-	flex-direction: column;
-}
-#login form {
 	text-align: left;
 	margin-top:30px;
 	display: flex;
@@ -193,23 +173,11 @@ li:hover {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-#login input {
-	height: 50px;
-	font-size: 1.2em;
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-}
-#login-form p {
-	margin: auto;
-	text-decoration: underline;
-}
 
 #contact label {
 	margin: 2em 0 1em 0;
 }
-#login label{
-	margin: 2em 0 1em 0;
-}
+
 #contact textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
@@ -253,4 +221,44 @@ footer nav ul {
 .filters_btn:hover{
 	background-color: #1D6154;
 	color: white;
+}
+
+/*** ajouté par moi */
+#login > * {
+	text-align: center;
+
+}
+#login h2{
+	margin-bottom: 20px;
+	font-family: 'Syne';
+
+}
+#login {
+	width: 50%;
+	margin: auto;
+	padding: 5em;
+}
+#login label{
+	margin: 2em 0 1em 0;
+}
+#login input {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+#login-form p {
+	margin: auto;
+	text-decoration: underline;
+}
+#login form {
+	text-align: left;
+	margin-top:30px;
+	display: flex;
+	flex-direction: column;
+}
+.footerlogin {
+	
+	bottom: 0;
+	width: 100%;
 }

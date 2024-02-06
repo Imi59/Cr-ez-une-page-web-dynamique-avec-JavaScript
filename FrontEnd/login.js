@@ -3,11 +3,6 @@ const loginForm = document.getElementById("login-form");
 const authToken = localStorage.getItem("authToken"); //l 'endroit ou est stocké le Token dans le localstorage
 const loginbouton = document.getElementById("loginbutton");
 
-const logo = document.querySelector("h1");
-logo.addEventListener("click", function () {
-  //Quand on clique sur le logo
-  window.location.href = "index.html"; // redirige vers la page d'accueil
-});
 
 // Ajoute un écouteur d'événements pour le formulaire de connexion lorsque l'utilisateur soumet le formulaire
 loginForm.addEventListener("submit", function (e) {
@@ -24,13 +19,10 @@ loginForm.addEventListener("submit", function (e) {
   };
 
   // Effectue une demande POST à l'API
-  const UrlAPIlogin = "http://localhost:5678/api/users/login";
-
-  fetch(UrlAPIlogin, {
+  
+  fetch("http://localhost:5678/api/users/login", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: {"Content-Type": "application/json", },
     body: JSON.stringify(loginData), // Convertit les données en format JSON et les envoie à l'API
   })
     .then((response) => {
