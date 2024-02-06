@@ -1,23 +1,17 @@
-/*fetch("http://localhost:5678/api/works")
-.then(response => response.json())
-.then(response => console.log(response))
-.catch(error => alert("Erreur : " + error));*/
 
-
-/** VARIABLES GLOBALES PROJET 6**/
 const sophieGallery = document.querySelector("#portfolio .gallery");
+
 
 const filters = document.querySelector(".filters");
 
-
-
-/* JE CREATION FONCTION POUR RECUPERER TOUS LES TRAVAUX DE SWAGGER*/
 
 async function getWorks() {
     const response = await fetch("http://localhost:5678/api/works");
     return await response.json();
 }
 getWorks();
+console.log(getWorks);
+
 
 async function displayWorks() {
     const allWorks = await  getWorks();
@@ -33,10 +27,7 @@ async function displayWorks() {
     });
     };
   displayWorks();
-
-  /***** AFFICHER LES FILTRES  *******/
-
-/*** récupérer les catégories via une fonction ******/
+  
 
 async function getCategory () {
     const response = await fetch ("http://localhost:5678/api/categories");
@@ -44,7 +35,6 @@ async function getCategory () {
 }
 getCategory();
 
-/**** faire apparaître les bouttons */
 
 async function displayBtnsCat() {
     const allCategory = await getCategory();
@@ -89,7 +79,6 @@ async function filtersClick() {
             });
              }  
     filtersClick();
-        
 
 
 
