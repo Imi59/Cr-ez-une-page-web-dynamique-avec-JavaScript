@@ -1,6 +1,6 @@
 // Récupère l'élément du formulaire de connexion avec l'ID 'login-form'
 const loginForm = document.getElementById("login-form");
-const authToken = localStorage.getItem("authToken"); //l 'endroit ou est stocké le Token dans le localstorage
+const loginToken = localStorage.getItem("loginToken"); //l 'endroit ou est stocké le Token dans le localstorage
 const loginbouton = document.getElementById("loginbutton");
 
 
@@ -33,7 +33,7 @@ loginForm.addEventListener("submit", function (e) {
       return response.json(); // Convertit la réponse JSON de l'API en objet JavaScript
     })
     .then((data) => {
-      localStorage.setItem("authToken", data.token); // Stock le token dans le localstorage
+      localStorage.setItem("loginToken", data.token); // Stock le token dans le localstorage
       alert("Connexion réussie"); // Affiche une alerte indiquant que la connexion a réussi
 
       window.location.href = "index.html"; // Redirige l'utilisateur vers 'index.html' Si la connexion est réussie

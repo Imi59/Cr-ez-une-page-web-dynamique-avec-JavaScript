@@ -80,6 +80,19 @@ async function filtersClick() {
              }  
     filtersClick();
 
+    // Si l'utilisateur est connecté
+    const loginToken = localStorage.getItem("loginToken"); //récuperer le token depuis le localstorage
+    const logout = document.getElementById("login-btn") // je récupére mon bouton login dont j'ai mis un id admin
+    if (loginToken) //si je suis connecté
+     {
+        logout.textContent = "Logout"; // remplace "login" par "logout" si l'utilisateur est connecté
+        // Bouton pour se déconnecter et si je suis connécté je lui ajoute un add event listener pour qu'on se déconnecte au click
+        logout.addEventListener("click", function () {
+          localStorage.removeItem("loginToken"); //supprime le token du localstorage donc on sera deconnecté
+          window.location.href = "login.html"; // et on est redirigé vers la page de connexion
+        });
+      }
+
 
 
 
