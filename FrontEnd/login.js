@@ -3,9 +3,6 @@ const loginForm = document.getElementById("login-form");
 const loginbouton = document.getElementById("loginbutton");
 const loginToken = localStorage.getItem("loginToken");
 
-
-
-
 loginForm.addEventListener("submit", function (e) {
   e.preventDefault();
   const email = document.getElementById("email").value;
@@ -21,18 +18,24 @@ loginForm.addEventListener("submit", function (e) {
   })
    //test de la connexion avec l'API
     .then((response) => {
-      if (!response.ok) {
-        throw new Error("Échec de la connexion"); // Si échec de la réponse de l'API
+       // Si la réponse n'est pas un code 200, on relève une erreur erreur
+      if (response.status !== 200) {
+        throw new Error(); 
       }
-      return response.json(); // Convertion de la réponse API en JSON
-    })
+      else{
+        return response.json(); // Convertion de la réponse API en JSON // Sinon, on récupère le corps de la réponse (le token JWT)
+    }
+  })
     .then((data) => {
-      localStorage.setItem("loginToken", data.token); // Stockage du token dans le localstorage
-      alert("Connexion réussie"); // Alerte qui indique que la connexion a réussi
-      window.location.href = "index.html"; // Utilisateur est redirigé vers 'index.html' en cas de réussite
+      localStorage.setItem("loginToken", data.token); // Stockage du token dans le localstorage en cas de bonne connexion
+      // On redirige l'utilisateur vers la page d'accueil
+      window.location.href = "./index.html";
     })
-    .catch((error) => {
-      alert("L’identifiant ou le mot de passe est incorrect"); // Alerte en cas d'échec
+    .catch(() => {
+      // Si une erreur de connexion est relevé , on affiche un message d'erreur via notre balise HTML
+      const error = document.getElementById("error-message")
+      error.textContent = "Votre email ou votre mot de passe est incorrect";
+     
     });
 });
 
