@@ -27,17 +27,15 @@ loginForm.addEventListener("submit", function (e) {
     }
   })
     .then((data) => {
-      localStorage.setItem("loginToken", data.token); // Stockage du token dans le localstorage en cas de bonne connexion
-      // On redirige l'utilisateur vers la page d'accueil
+    // Stockage du token dans le localstorage en cas de bonne connexion
+      localStorage.setItem("loginToken", data.token); 
+    // On redirige l'utilisateur vers la page d'accueil
       window.location.href = "./index.html";
     })
     .catch(() => {
       // Si une erreur de connexion est relevé , on affiche un message d'erreur via notre balise HTML
       const error = document.getElementById("error-message")
       error.textContent = "Votre email ou votre mot de passe est incorrect";
-     
     });
 });
-
-
   

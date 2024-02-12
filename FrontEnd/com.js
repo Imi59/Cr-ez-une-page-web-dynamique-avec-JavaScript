@@ -21,20 +21,19 @@ loginForm.addEventListener("submit", function (e) {
   })
    //test de la connexion avec l'API
     .then((response) => {
-       // Si la réponse n'est pas un code 200, on lève une erreur
-      if (response.status !== 200) {
-        throw new Error(); // Si échec de la réponse de l'API
+      if (!response.ok) {
+        throw new Error("Échec de la connexion"); // Si échec de la réponse de l'API
       }
-      else{
-        return response.json(); // Convertion de la réponse API en JSON // Sinon, on récupère le corps de la réponse (le token JWT)
-    }
-  })
+      return response.json(); // Convertion de la réponse API en JSON
+    })
     .then((data) => {
       localStorage.setItem("loginToken", data.token); // Stockage du token dans le localstorage
-      // On redirige l'utilisateur vers la page d'accueil
-      window.location.href = "./index.html";
+      alert("Connexion réussie"); // Alerte qui indique que la connexion a réussi
+      window.location.href = "index.html"; // Utilisateur est redirigé vers 'index.html' en cas de réussite
     })
     .catch((error) => {
-      
+      alert("L’identifiant ou le mot de passe est incorrect"); // Alerte en cas d'échec
     });
 });
+
+

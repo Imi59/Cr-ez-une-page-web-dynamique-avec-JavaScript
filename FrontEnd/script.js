@@ -28,13 +28,11 @@ async function displayWorks() {
     };
   displayWorks();
   
-
 async function getCategory () {
     const response = await fetch ("http://localhost:5678/api/categories");
     return await response.json(); 
 }
 getCategory();
-
 
 async function displayBtnsCat() {
     const allCategory = await getCategory();
