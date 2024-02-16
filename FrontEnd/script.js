@@ -97,7 +97,7 @@ async function filtersClick() {
 
 let token = localStorage.getItem("token");
 let user = localStorage.getItem("connected");
-const admin = document.querySelector(".edit")
+const admin = document.querySelector("#modify")
 const containerModals = document.querySelector(".containerModals");
 const mark = document.querySelector(".fa-xmark");
 const pixModal = document.querySelector(".pixModal");
@@ -105,10 +105,19 @@ const pixModal = document.querySelector(".pixModal");
 // Si l'utilisateur est connecté
 if (user != null) {
 	// Le bandeau mode édition apparaît
-	const element = document.querySelector(".edit");
-	element.style.display = "flex";
+	const blackBand = document.querySelector(".edit");
+	blackBand.style.display = "flex";
+    // le "modifier" aparaît à côté de "Mes projets"
+    const btnModify = document.getElementById("#modify");
+	btnModify.style.display = "flex";
+    //les filtres n apparaissent plus
+    const category = document.querySelector(".filters");
+	category.style.display = "none";
+    //Créer un margin en dessous de Mes Projets
+	const myProjects = document.querySelector(".titleAdmin h2");
+	myProjects.style.marginBottom = "2.5em";
 }
-//je créé une fonction pour qu'au click sur la bande noire la fenêtre modale s'ouvre
+//je créé une fonction pour qu'au click sur "modifier" la fenêtre modale s'ouvre
 function manageDisplayPixModal() {
     admin.addEventListener("click", () => {
       containerModals.style.display = "flex";
@@ -119,7 +128,7 @@ function manageDisplayPixModal() {
       containerModals.style.display = "none";
     });
     containerModals.addEventListener("click", (e) => {
-        if (e.target.className == "containerModals") { //si on clique sur un élément donc le nom de classe est containermodals on fait disparaître la fenêtre
+        if (e.target.className == "containerModals") { //si on clique sur un élément dont le nom de classe est containermodals on fait disparaître la fenêtre
           containerModals.style.display = "none";
         }
       });

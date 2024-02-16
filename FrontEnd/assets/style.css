@@ -129,10 +129,7 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
-#portfolio h2 {
-	text-align: center;
-	margin-bottom: 1em;
-}
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -273,15 +270,12 @@ footer nav ul {
 /** bande noire */
 .edit 
 {
+	display: none;
 	background-color: black;
-	top: 0;
-	left: 0;
 	width: 100%;
 	height: 40px;
-	display: none;
 	align-items: center;
 	justify-content: center;
-	padding: 10px 0px;
 }
 
 .edition 
@@ -302,7 +296,6 @@ footer nav ul {
 
 .edition:hover {
 	font-weight: bold;
-	cursor: pointer;
 
 }
 .edition i 
@@ -361,5 +354,24 @@ footer nav ul {
 hr {
 	width: 70%;
 	border: 1px solid #B3B3B3;
+	
+}
+
+
+.titleAdmin{
+	display: flex;
+	justify-content: center;
+	gap: 1em;
+	margin-top: 6em;
+	
+	
+}
+#modify{
+	display: none;
+	font-family: 'Work Sans';
+	color: black;
+	padding-top: 0.8em;
+	height: min-content;
+	cursor: pointer;
 	
 }
