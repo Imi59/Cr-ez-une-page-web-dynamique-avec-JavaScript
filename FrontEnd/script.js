@@ -93,5 +93,33 @@ async function filtersClick() {
 
 
 
+// affichage de la modal à la connexion 
+
+let token = localStorage.getItem("token");
+let user = localStorage.getItem("connected");
+const admin = document.querySelector(".edit")
+const containerModals = document.querySelector(".containerModals");
+const mark = document.querySelector(".fa-xmark");
+const pixModal = document.querySelector(".pixModal");
+
+// Si l'utilisateur est connecté
+if (user != null) {
+	// Le bandeau mode édition apparaît
+	const element = document.querySelector(".edit");
+	element.style.display = "flex";
+}
+function manageDisplayModalGarag(params) {
+    admin.addEventListener("click", () => {
+      // console.log(containerModals);
+      containerModals.style.display = "flex";
+    });
+    // gere la fermeture de la modale sur la croix
+    mark.addEventListener("click", () => {
+      containerModals.style.display = "none";
+    });
+}
+
+
+
 
 
