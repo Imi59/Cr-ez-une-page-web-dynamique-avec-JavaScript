@@ -108,16 +108,23 @@ if (user != null) {
 	const element = document.querySelector(".edit");
 	element.style.display = "flex";
 }
-function manageDisplayModalGarag(params) {
+//je créé une fonction pour qu'au click sur la bande noire la fenêtre modale s'ouvre
+function manageDisplayPixModal() {
     admin.addEventListener("click", () => {
-      // console.log(containerModals);
       containerModals.style.display = "flex";
+      console.log(containerModals);
     });
     // gere la fermeture de la modale sur la croix
     mark.addEventListener("click", () => {
       containerModals.style.display = "none";
     });
+    containerModals.addEventListener("click", (e) => {
+        if (e.target.className == "containerModals") { //si on clique sur un élément donc le nom de classe est containermodals on fait disparaître la fenêtre
+          containerModals.style.display = "none";
+        }
+      });
 }
+manageDisplayPixModal();
 
 
 
