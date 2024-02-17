@@ -10,7 +10,6 @@ async function getWorks() {
     return await response.json();
 }
 getWorks();
-console.log(getWorks);
 
 
 async function displayWorks() {
@@ -80,7 +79,9 @@ async function filtersClick() {
 
     // Si l'utilisateur est connecté
     const loginToken = localStorage.getItem("loginToken"); //récuperer le token depuis le localstorage
-    const logout = document.getElementById("login-btn") // je récupére mon bouton login dont j'ai mis un id admin
+
+    const logout = document.getElementById("login-btn") // je récupére mon bouton login 
+
     if (loginToken) //si je suis connecté
      {
         logout.textContent = "Logout"; // remplace "login" par "logout" si l'utilisateur est connecté
@@ -89,35 +90,29 @@ async function filtersClick() {
           localStorage.removeItem("loginToken"); //supprime le token du localstorage donc on sera deconnecté
           window.location.href = "login.html"; // et on est redirigé vers la page de connexion
         });
-      }
 
-
-
-// affichage de la modal à la connexion 
-
-let token = localStorage.getItem("token");
-let user = localStorage.getItem("connected");
-const admin = document.querySelector("#modify")
-const containerModals = document.querySelector(".containerModals");
-const mark = document.querySelector(".fa-xmark");
-const pixModal = document.querySelector(".pixModal");
-
-// Si l'utilisateur est connecté
-if (user != null) {
+    // toujours si l'utilisateur est connecté
 	// Le bandeau mode édition apparaît
-	const blackBand = document.querySelector(".edit");
+    const blackBand = document.querySelector(".edit");
 	blackBand.style.display = "flex";
     // le "modifier" aparaît à côté de "Mes projets"
-    const btnModify = document.getElementById("#modify");
-	btnModify.style.display = "flex";
+    const btnModify = document.querySelector("#portfolio .modify");
+    btnModify.style.display = "flex";
     //les filtres n apparaissent plus
     const category = document.querySelector(".filters");
 	category.style.display = "none";
     //Créer un margin en dessous de Mes Projets
 	const myProjects = document.querySelector(".titleAdmin h2");
 	myProjects.style.marginBottom = "2.5em";
-}
-//je créé une fonction pour qu'au click sur "modifier" la fenêtre modale s'ouvre
+
+      }
+        
+    const admin = document.querySelector("#portfolio .modify")
+    const containerModals = document.querySelector(".containerModals");
+    const mark = document.querySelector(".fa-xmark");
+    const pixModal = document.querySelector(".pixModal");
+
+      //je créé une fonction pour qu'au click sur "modifier" la fenêtre modale s'ouvre
 function manageDisplayPixModal() {
     admin.addEventListener("click", () => {
       containerModals.style.display = "flex";
@@ -132,10 +127,30 @@ function manageDisplayPixModal() {
           containerModals.style.display = "none";
         }
       });
+ 
 }
 manageDisplayPixModal();
 
-
+//récupérer les images dynamiquement
+async function displayPix() {
+const projects = document.querySelector(".projects")
+projects.innerHTML = ""; //mise à jour
+const pix = await getWorks(); //je récupére mes travaux avec ma fonction getworks
+console.log(pix);
+pix.forEach(element => {
+    const figure = document.createElement("figure");
+    projects.appendChild(figure);  
+    const img = document.createElement("img"); 
+    img.src = element.imageUrl;
+    figure.appendChild(img);
+    const span = document.createElement("span"); //conteneur pour la poubelle
+    span.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
+    span.id = element.id;
+    figure.appendChild(span);
+});
+console.log(projects);
+}
+displayPix();
 
 
 
