@@ -154,6 +154,8 @@ async function displayPix() {
 deletePix(); // la node liste est à 0 car ça va tellement vite qu'il essaie de récupérer toutes les poubelles avant même 
  //qu'elles soient créent donc j'appelle la fonction également dans la fonction précédente
 }
+
+
 displayPix();
  // création fonction pour supprimer les projets
 function deletePix() { 
@@ -167,9 +169,11 @@ function deletePix() {
             const init = {
               method: "DELETE",
               headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",  "Authorization" : `Bearer ${loginToken}`
                },
             };
+            console.log(init);
+        
             fetch("http://localhost:5678/api/works/" + id, init)
             .then((response) => {
               if (!response.ok) {
