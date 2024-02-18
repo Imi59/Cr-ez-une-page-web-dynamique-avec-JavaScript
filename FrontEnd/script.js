@@ -22,7 +22,7 @@ async function displayWorks() {
             figcaption.textContent = element.title;
             figure.appendChild(img);
             figure.appendChild(figcaption);
-            sophieGallery.appendChild(figure);   
+            sophieGallery.appendChild(figure); 
     });
     };
   displayWorks();
@@ -116,7 +116,7 @@ async function filtersClick() {
 function manageDisplayPixModal() {
     admin.addEventListener("click", () => {
       containerModals.style.display = "flex";
-      console.log(containerModals);
+      //console.log(containerModals);
     });
     // gere la fermeture de la modale sur la croix
     mark.addEventListener("click", () => {
@@ -131,26 +131,66 @@ function manageDisplayPixModal() {
 }
 manageDisplayPixModal();
 
-//récupérer les images dynamiquement
+
+const projects = document.querySelector(".projects");
+  console.log(projects);
+
+
 async function displayPix() {
-const projects = document.querySelector(".projects")
-projects.innerHTML = ""; //mise à jour
-const pix = await getWorks(); //je récupére mes travaux avec ma fonction getworks
-console.log(pix);
-pix.forEach(element => {
+  projects.innerHTML= "";
+  const arrayWorks = await getWorks();
+  console.log(arrayWorks);
+  arrayWorks.forEach( (work) => {
     const figure = document.createElement("figure");
-    projects.appendChild(figure);  
-    const img = document.createElement("img"); 
-    img.src = element.imageUrl;
-    figure.appendChild(img);
-    const span = document.createElement("span"); //conteneur pour la poubelle
+    const img = document.createElement("img");
+    const span = document.createElement("span");
     span.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
-    span.id = element.id;
+    span.id = work.id;
+    img.src = work.imageUrl;
+    figure.appendChild(img);
     figure.appendChild(span);
-});
-console.log(projects);
+    projects.appendChild(figure);
+  });
+deletePix(); // la node liste est à 0 car ça va tellement vite qu'il essaie de récupérer toutes les poubelles avant même 
+ //qu'elles soient créent donc j'appelle la fonction également dans la fonction précédente
 }
 displayPix();
+ // création fonction pour supprimer les projets
+function deletePix() { 
+  //je veux qu'au click sur la poubelle l'image se supprime
+  //je récupére d'abord toutes mes poubelles
+  const trashAll = document.querySelectorAll(".projects span");
+  // pour chaque poubelle je veux qu on écoute un évenement au click
+  trashAll.forEach(trash => {
+          trash.addEventListener("click", (e) => {
+            id = trash.id; // on enregistre l'id de nos corbeille
+            const init = {
+              method: "DELETE",
+              headers: {
+              "Content-Type": "application/json"
+               },
+            };
+            fetch("http://localhost:5678/api/works/" + id, init)
+            .then((response) => {
+              if (!response.ok) {
+                console.log("le delete n'a pas marché !");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("la delete a réussi voici la data :", data);
+              //si ça amarché il faut donc actualiser la modale et les photos
+              displayPix();
+              displayWorks();
+
+
+          })
+      })
+      
+  });
+}
+
+
 
 
 

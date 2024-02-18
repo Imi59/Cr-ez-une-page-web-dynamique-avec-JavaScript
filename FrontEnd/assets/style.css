@@ -383,8 +383,7 @@ hr {
   height: 60%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 0.5em;
+  gap: 1em;
   row-gap: 2em;
   
 }
