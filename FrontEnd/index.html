@@ -33,6 +33,36 @@
 	
 	</div>
 
+	<div class="modalAddImg">
+		<span><i class="fa-solid fa-arrow-left"></i></span>
+		<span><i class="fa-solid fa-xmark"></i></span>
+		<h3>Ajout Photo</h3>
+		<form>
+		  <div class="containerFile">
+			<span><i class="fa-regular fa-image"></i></span>
+			<label for="file">+ Ajouter photo</label>
+			<input type="file" id="file" name="imageUrl">
+			<img src="#" alt="Aperçut de l'image">
+			<p>jpg,png: 4mo max</p>
+		  </div>
+		  <label for="title">Titre</label>
+		  <input type="text" id="title" name="title">
+
+		  <label for="category">Catégorie</label>
+
+		  <select name="categoryId" id="category">
+
+			<option value="1">Objets</option>
+			<option value="2">Appartements</option>
+			<option value="3">Hotels & restaurants</option>
+
+		  </select>
+
+		  <button class="button">Valider</button>
+
+		</form>
+	  </div>
+
 	<div class="edit">
 		<button class="edition"> <i class="fa-sharp fa-regular fa-pen-to-square"> </i> Mode édition </button>
 		<!--<button class="publish">publier les changements</button>-->

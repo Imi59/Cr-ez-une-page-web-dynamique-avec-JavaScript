@@ -157,11 +157,14 @@ deletePix(); // la node liste est à 0 car ça va tellement vite qu'il essaie de
 
 
 displayPix();
+
  // création fonction pour supprimer les projets
 function deletePix() { 
   //je veux qu'au click sur la poubelle l'image se supprime
-  //je récupére d'abord toutes mes poubelles
+
+  //je récupére d'abord toutes mes poubelles en prenant les span qui contiennent les id 
   const trashAll = document.querySelectorAll(".projects span");
+
   // pour chaque poubelle je veux qu on écoute un évenement au click
   trashAll.forEach(trash => {
           trash.addEventListener("click", (e) => {
@@ -172,8 +175,6 @@ function deletePix() {
               "Content-Type": "application/json",  "Authorization" : `Bearer ${loginToken}`
                },
             };
-            console.log(init);
-        
             fetch("http://localhost:5678/api/works/" + id, init)
             .then((response) => {
               if (!response.ok) {
@@ -183,14 +184,11 @@ function deletePix() {
             })
             .then((data) => {
               console.log("la delete a réussi voici la data :", data);
-              //si ça amarché il faut donc actualiser la modale et les photos
+              //si ça a marché il faut donc actualiser la modale et les photos
               displayPix();
               displayWorks();
-
-
           })
-      })
-      
+      })  
   });
 }
 
