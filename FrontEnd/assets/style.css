@@ -424,12 +424,12 @@ hr {
 	height: 70%;
 	width: 60%;
 	background-color: whitesmoke;
-	border-radius: 5px;
+	border-radius: 10px;
 	position: relative;
   }
 
   .modalAddImg h3{
-	margin: 1em;
+	padding: 1.5em;
 	color: black;
 	font-size: 24px;
   }
@@ -451,22 +451,33 @@ hr {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	align-items: center;
 	height: 80%;
 	width: 80%;
 	gap: 10px;
   }
 
   .modalAddImg form .containerFile {
-	background-color: grey;
-	height: 30%;
+	background-color: #E8F1F6;
+	width: 60%;
+	height: 60%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	border-radius: 5px;
+	margin: 1.5em;
+	padding: 1.5em;
+	gap: 1em;
   }
+  .txt {
+	border: none;
+	width: 70%;
+	height: 45px;
+	box-shadow: 0px 4px 14px 0px #00000017;
+  } 
   .modalAddImg form .containerFile label {
-	background-color: black;
-	color: white;
+	background-color:#CBD6DC;
+	color: #306685;
 	border-radius: 15px;
 	padding: 5px 10px;
 	cursor: pointer;
@@ -481,17 +492,20 @@ hr {
   }
   .modalAddImg form .containerFile .fa-image {
 	font-size: 3rem;
+	color: #CBD6DC;
   }
   .modalAddImg form .containerFile p {
 	font-weight: 300;
 	font-size: 0.5rem;
   }
   .modalAddImg form .button {
-	background-color: white;
-	padding: 5px 10px;
+	background-color: #A7A7A7;
+	width: 40%;
+	padding: 10px 15px;
 	border-radius: 25px;
 	border: none;
 	cursor: pointer;
+	margin: 1.5em;
   }
   .modalAddImg form .button:focus {
 	background-color: black;
