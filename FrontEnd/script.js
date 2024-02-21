@@ -202,7 +202,7 @@ const arrowleft = document.querySelector(".modalAddImg .fa-arrow-left");
 const markAdd = document.querySelector(".modalAddImg .fa-xmark");
 console.log(btnAddImg);
 
-function displayModal2() {
+function displayModa2() {
   btnAddImg.addEventListener("click", () => {
     modale2.style.display = "flex";
     modalPix.style.display = "none";
@@ -217,7 +217,7 @@ function displayModal2() {
   });
 }
 
-displayModal2();
+displayModa2();
 
 //ajout projet
 
@@ -226,35 +226,60 @@ const inputFile = document.querySelector(".containerFile input");
 const labelFile = document.querySelector(".containerFile label");
 const iconFile = document.querySelector(".containerFile .fa-image");
 const pFile = document.querySelector(".containerFile p");
-//Ecouter les changement sur l'input file
+
+//Lorsque l'utilisateur sélectionne un fichier, la fonction fléchée associée est déclenchée
 inputFile.addEventListener("change", () => {
+// On récupère le premier fichier sélectionné par l'utilisateur et on le stocke dans la variable file
   const file = inputFile.files[0];
   console.log(file);
+//On vérifie qu'un fichier a bien été sélectionné par l'utilisateur = Si c'est le cas le code à l'intérieur du bloc if est exécuté
   if (file) {
+    //Création d'un nouvel objet FileReader qui permet de lire le contenu des fichiers
     const reader = new FileReader();
+    //Lorsque le contenu du fichier est chargé avec succés, la fonction associée est déclenchée
     reader.onload = function (e) {
-      previewImg.src = e.target.result;
+
+      previewImg.src = e.target.result; // MAJ de la source de l'image
       previewImg.style.display = "flex";
+      //on cache tous les éléments du container files une fois la photo affiché
       labelFile.style.display = "none";
       iconFile.style.display = "none";
       pFile.style.display = "none";
     };
+    //le contenu du fichier sera converti en une URL 
     reader.readAsDataURL(file);
   }
 });
-//Faire un POST ajouter un vehicule
+
+
 const form = document.querySelector("form");
 const title = document.querySelector("#title");
 const category = document.querySelector("#category");
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+
+  // Vérifier si le champ de titre est vide
+  if (title.value.trim() === '') {
+    // Afficher un message d'erreur sur l'interface
+    alert("Veuillez saisir un titre pour votre projet");
+    return; // Arrêter l'exécution de la fonction
+  }
+
+  // Vérifier si aucune catégorie n'est sélectionnée
+  if (category.value === '0') {
+    // Afficher un message d'erreur sur l'interface
+    alert("Veuillez sélectionner une catégorie pour votre projet.");
+    return; // Arrêter l'exécution de la fonction
+  }
+
   const formData = new FormData();
   formData.append('image', inputFile.files[0]);
   formData.append('title', title.value);
   formData.append('category', category.value);
 
   try {
-    const loginToken = localStorage.getItem("loginToken");; // Remplacez cela par votre jeton JWT valide
+    const loginToken = localStorage.getItem("loginToken"); // Remplacez cela par votre jeton JWT valide
 
     const response = await fetch("http://localhost:5678/api/works", {
       method: "POST",
