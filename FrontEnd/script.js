@@ -192,6 +192,94 @@ function deletePix() {
   });
 }
 
+//Ajouter une photo
+
+// je récupère le boutton de la premièe modal / la deuxième modale / pour faire un événement au click et faire apparâitre la deuxiéme modale
+const btnAddImg = document.querySelector(".buttonAddPix");
+const modale2 = document.querySelector(".modalAddImg");
+const modalPix = document.querySelector(".modalPix");
+const arrowleft = document.querySelector(".modalAddImg .fa-arrow-left");
+const markAdd = document.querySelector(".modalAddImg .fa-xmark");
+console.log(btnAddImg);
+
+function displayModal2() {
+  btnAddImg.addEventListener("click", () => {
+    modale2.style.display = "flex";
+    modalPix.style.display = "none";
+  });
+  arrowleft.addEventListener("click", () => {
+    modale2.style.display = "none";
+    modalPix.style.display = "flex";
+  });
+  markAdd.addEventListener("click", () => {
+    containerModals.style.display = "none";
+    window.location = "index.html";
+  });
+}
+
+displayModal2();
+
+//ajout projet
+
+const previewImg = document.querySelector(".containerFile img");
+const inputFile = document.querySelector(".containerFile input");
+const labelFile = document.querySelector(".containerFile label");
+const iconFile = document.querySelector(".containerFile .fa-image");
+const pFile = document.querySelector(".containerFile p");
+//Ecouter les changement sur l'input file
+inputFile.addEventListener("change", () => {
+  const file = inputFile.files[0];
+  console.log(file);
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      previewImg.src = e.target.result;
+      previewImg.style.display = "flex";
+      labelFile.style.display = "none";
+      iconFile.style.display = "none";
+      pFile.style.display = "none";
+    };
+    reader.readAsDataURL(file);
+  }
+});
+//Faire un POST ajouter un vehicule
+const form = document.querySelector("form");
+const title = document.querySelector("#title");
+const category = document.querySelector("#category");
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append('image', inputFile.files[0]);
+  formData.append('title', title.value);
+  formData.append('category', category.value);
+
+  try {
+    const loginToken = localStorage.getItem("loginToken");; // Remplacez cela par votre jeton JWT valide
+
+    const response = await fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${loginToken}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Erreur lors de la requête HTTP !');
+    }
+
+    const data = await response.json();
+    console.log("Nouveau projet créé !", data);
+  } catch (error) {
+    console.error("Une erreur est survenue lors de l'envoi :", error.message);
+  }
+});
+
+
+
+
+
+
 
 
 

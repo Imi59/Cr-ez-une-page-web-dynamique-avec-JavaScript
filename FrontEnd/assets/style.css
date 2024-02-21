@@ -417,13 +417,13 @@ hr {
 
   /**** modal pour ajouter une photo***/
   .modalAddImg {
-	display: flex;
+	display: none;
 	justify-content: space-around;
 	flex-direction: column;
 	align-items: center;
-	height: 70%;
+	height: 90%;
 	width: 60%;
-	background-color: whitesmoke;
+	background-color: #FFFFFF;
 	border-radius: 10px;
 	position: relative;
   }
