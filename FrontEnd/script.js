@@ -226,6 +226,7 @@ const inputFile = document.querySelector(".containerFile input");
 const labelFile = document.querySelector(".containerFile label");
 const iconFile = document.querySelector(".containerFile .fa-image");
 const pFile = document.querySelector(".containerFile p");
+const submitBtn = document.querySelector("#submitBtn");
 
 //Lorsque l'utilisateur sélectionne un fichier, la fonction fléchée associée est déclenchée
 inputFile.addEventListener("change", () => {
@@ -245,6 +246,8 @@ inputFile.addEventListener("change", () => {
       labelFile.style.display = "none";
       iconFile.style.display = "none";
       pFile.style.display = "none";
+      // Activer le bouton de validation une fois la photo chargée avec succès
+      submitBtn.disabled = false;
     };
     //le contenu du fichier sera converti en une URL 
     reader.readAsDataURL(file);
@@ -255,48 +258,53 @@ inputFile.addEventListener("change", () => {
 const form = document.querySelector("form");
 const title = document.querySelector("#title");
 const category = document.querySelector("#category");
+category.value = '';
+const errorMessage = document.querySelector("#errorMessage");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  // Effacer le message d'erreur précédent
+  errorMessage.textContent = '';
+
   // Vérifier si le champ de titre est vide
   if (title.value.trim() === '') {
-    // Afficher un message d'erreur sur l'interface
-    alert("Veuillez saisir un titre pour votre projet");
-    return; // Arrêter l'exécution de la fonction
+      errorMessage.textContent = "Veuillez saisir un titre pour votre projet.";
+      return; // Arrêter l'exécution de la fonction
   }
 
   // Vérifier si aucune catégorie n'est sélectionnée
   if (category.value === '0') {
-    // Afficher un message d'erreur sur l'interface
-    alert("Veuillez sélectionner une catégorie pour votre projet.");
-    return; // Arrêter l'exécution de la fonction
+      errorMessage.textContent = "Veuillez sélectionner une catégorie pour votre projet.";
+      return; // Arrêter l'exécution de la fonction
   }
 
   const formData = new FormData();
-  formData.append('image', inputFile.files[0]);
+  // Ajouter les données du formulaire au FormData
   formData.append('title', title.value);
   formData.append('category', category.value);
 
   try {
-    const loginToken = localStorage.getItem("loginToken"); // Remplacez cela par votre jeton JWT valide
+      // Récupérer le token depuis le stockage local
+      const loginToken = localStorage.getItem("loginToken");
 
-    const response = await fetch("http://localhost:5678/api/works", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${loginToken}`,
-      },
-      body: formData,
-    });
+      // Envoyer la requête POST avec les données du formulaire et le token
+      const response = await fetch("http://localhost:5678/api/works", {
+          method: "POST",
+          headers: {
+              "Authorization": `Bearer ${loginToken}`,
+          },
+          body: formData,
+      });
 
-    if (!response.ok) {
-      throw new Error('Erreur lors de la requête HTTP !');
-    }
+      if (!response.ok) {
+          throw new Error('Erreur lors de la requête HTTP !');
+      }
 
-    const data = await response.json();
-    console.log("Nouveau projet créé !", data);
+      const data = await response.json();
+      console.log("Nouveau projet créé avec succés!", data);
   } catch (error) {
-    console.error("Une erreur est survenue lors de l'envoi :", error.message);
+      console.error("Une erreur est survenue lors de l'envoi :", error.message);
   }
 });
 
