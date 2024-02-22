@@ -191,27 +191,18 @@ const iconFile = document.querySelector(".containerFile .fa-image");
 const pFile = document.querySelector(".containerFile p");
 const submitBtn = document.querySelector("#submitBtn");
 
-// Lorsque l'utilisateur sélectionne un fichier, la fonction fléchée associée est déclenchée
 inputFile.addEventListener("change", () => {
-  // On récupère le premier fichier sélectionné par l'utilisateur et on le stocke dans la variable file
   const file = inputFile.files[0];
-  console.log(file);
-  // On vérifie si un fichier a été sélectionné par l'utilisateur
   if (file) {
-    // Création d'un nouvel objet FileReader qui permet de lire le contenu des fichiers
     const reader = new FileReader();
-    // Lorsque le contenu du fichier est chargé avec succès, la fonction associée est déclenchée
     reader.onload = function (e) {
-      previewImg.src = e.target.result; // Mise à jour de la source de l'image
+      previewImg.src = e.target.result;
       previewImg.style.display = "flex";
-      // On cache tous les éléments du container files une fois la photo affichée
       labelFile.style.display = "none";
       iconFile.style.display = "none";
       pFile.style.display = "none";
-      // Activer le bouton de validation une fois la photo chargée avec succès
       submitBtn.disabled = false;
     };
-    // Le contenu du fichier sera converti en une URL
     reader.readAsDataURL(file);
   }
 });
@@ -224,34 +215,26 @@ const errorMessage = document.querySelector("#errorMessage");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-
-  // Effacer le message d'erreur précédent
   errorMessage.textContent = "";
 
-  // Vérifier si le champ de titre est vide
   if (title.value.trim() === "") {
     errorMessage.textContent = "Veuillez saisir un titre pour votre projet.";
-    return; // Arrêter l'exécution de la fonction
+    return;
   }
 
-  // Vérifier si aucune catégorie n'est sélectionnée
   if (category.value === "0") {
     errorMessage.textContent =
       "Veuillez sélectionner une catégorie pour votre projet.";
-    return; // Arrêter l'exécution de la fonction
+    return;
   }
 
   try {
-    // Récupérer le token depuis le stockage local
     const loginToken = localStorage.getItem("loginToken");
 
-    // Créer un objet FormData pour inclure les données du formulaire et l'image
     const formData = new FormData();
     formData.append("title", title.value);
     formData.append("category", category.value);
-    formData.append("image", inputFile.files[0]); // Ajout de l'image
-
-    // Envoyer la requête POST avec les données du formulaire et le token
+    formData.append("image", inputFile.files[0]);
     const response = await fetch("http://localhost:5678/api/works", {
       method: "POST",
       headers: {
@@ -260,12 +243,8 @@ form.addEventListener("submit", async (e) => {
       body: formData,
     });
 
-    if (!response.ok) {
-      throw new Error("Erreur lors de la requête HTTP !");
-    }
-
     const data = await response.json();
-    console.log("Nouveau projet créé avec succès!", data);
+    console.log(data);
   } catch (error) {
     console.error("Une erreur est survenue lors de l'envoi :", error.message);
   }
