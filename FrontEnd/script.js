@@ -70,68 +70,55 @@ async function filtersClick() {
 }
 filtersClick();
 
+//GESTION UNE FOIS L'UTILISATEUR CONNECTE - MODALES
 
+//AFFICHAGE A LA CONNEXION + GESTION A LA DECONNEXION
 
-
-
-
-
-
-
-// Si l'utilisateur est connecté
-const loginToken = localStorage.getItem("loginToken"); //récuperer le token depuis le localstorage
-const logout = document.getElementById("login-btn"); // je récupére mon bouton login
+const loginToken = localStorage.getItem("loginToken");
+const logout = document.getElementById("login-btn");
 
 if (loginToken) {
-  //si je suis connecté
-  logout.textContent = "Logout"; // remplace "login" par "logout" si l'utilisateur est connecté
-  // Bouton pour se déconnecter et si je suis connécté je lui ajoute un add event listener pour qu'on se déconnecte au click
-  logout.addEventListener("click", function () {
-    localStorage.removeItem("loginToken"); //supprime le token du localstorage donc on sera deconnecté
-    window.location.href = "login.html"; // et on est redirigé vers la page de connexion
-  });
-
-  // toujours si l'utilisateur est connecté
-  // Le bandeau mode édition apparaît
+  logout.textContent = "Logout";
   const blackBand = document.querySelector(".edit");
   blackBand.style.display = "flex";
-  // le "modifier" aparaît à côté de "Mes projets"
   const btnModify = document.querySelector("#portfolio .modify");
   btnModify.style.display = "flex";
-  //les filtres n apparaissent plus
   const category = document.querySelector(".filters");
   category.style.display = "none";
-  //Créer un margin en dessous de Mes Projets
   const myProjects = document.querySelector(".titleAdmin h2");
   myProjects.style.marginBottom = "2.5em";
+  logout.addEventListener("click", function () {
+    localStorage.removeItem("loginToken");
+    window.location.href = "login.html";
+  });
 }
+
+//GESTION OUVERTURE-FERMETURE MODALE 1
 
 const admin = document.querySelector("#portfolio .modify");
 const containerModals = document.querySelector(".containerModals");
 const mark = document.querySelector(".fa-xmark");
 const pixModal = document.querySelector(".pixModal");
 
-//je créé une fonction pour qu'au click sur "modifier" la fenêtre modale s'ouvre
 function manageDisplayPixModal() {
   admin.addEventListener("click", () => {
     containerModals.style.display = "flex";
-    //console.log(containerModals);
   });
-  // gere la fermeture de la modale sur la croix
   mark.addEventListener("click", () => {
     containerModals.style.display = "none";
   });
   containerModals.addEventListener("click", (e) => {
     if (e.target.className == "containerModals") {
-      //si on clique sur un élément dont le nom de classe est containermodals on fait disparaître la fenêtre
       containerModals.style.display = "none";
     }
   });
 }
 manageDisplayPixModal();
 
-const projects = document.querySelector(".projects");
+//AFFICHAGE DYNAMIQUE DES PROJETS
+
 async function displayPix() {
+  const projects = document.querySelector(".projects");
   projects.innerHTML = "";
   const arrayWorks = await getWorks();
   arrayWorks.forEach((work) => {
@@ -145,23 +132,18 @@ async function displayPix() {
     figure.appendChild(span);
     projects.appendChild(figure);
   });
-  deletePix(); // la node liste est à 0 car ça va tellement vite qu'il essaie de récupérer toutes les poubelles avant même
-  //qu'elles soient créent donc j'appelle la fonction également dans la fonction précédente
+  deletePix();
 }
 
 displayPix();
 
-// création fonction pour supprimer les projets
+//SUPPRESSON DE PROJETS
+
 function deletePix() {
-  //je veux qu'au click sur la poubelle l'image se supprime
-
-  //je récupére d'abord toutes mes poubelles en prenant les span qui contiennent les id
   const trashAll = document.querySelectorAll(".projects span");
-
-  // pour chaque poubelle je veux qu on écoute un évenement au click
   trashAll.forEach((trash) => {
     trash.addEventListener("click", (e) => {
-      id = trash.id; // on enregistre l'id de nos corbeille
+      id = trash.id;
       const init = {
         method: "DELETE",
         headers: {
@@ -169,26 +151,16 @@ function deletePix() {
           Authorization: `Bearer ${loginToken}`,
         },
       };
-      fetch("http://localhost:5678/api/works/" + id, init)
-        .then((response) => {
-          if (!response.ok) {
-            console.log("le delete n'a pas marché !");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log("la delete a réussi voici la data :", data);
-          //si ça a marché il faut donc actualiser la modale et les photos
-          displayPix();
-          displayWorks();
-        });
+      fetch("http://localhost:5678/api/works/" + id, init).then((data) => {
+        displayPix();
+        displayWorks();
+      });
     });
   });
 }
 
-//Ajouter une photo
+//AJOUT PHOTO
 
-// je récupère le boutton de la premièe modal / la deuxième modale / pour faire un événement au click et faire apparâitre la deuxiéme modale
 const btnAddImg = document.querySelector(".buttonAddPix");
 const modale2 = document.querySelector(".modalAddImg");
 const modalPix = document.querySelector(".modalPix");
