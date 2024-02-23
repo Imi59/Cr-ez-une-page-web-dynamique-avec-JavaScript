@@ -570,3 +570,7 @@ hr {
   cursor: pointer;
   margin: 1.5em;
 }
+#errorMessage {
+  color: red;
+  font-weight: bold;
+}
