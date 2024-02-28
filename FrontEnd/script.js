@@ -31,24 +31,27 @@ getCategory();
 async function displayBtnsCat() {
   const allCategory = await getCategory();
   allCategory.forEach((element) => {
-    const btn = document.createElement("button");
-    btn.textContent = element.name.toUpperCase();
-    btn.id = element.id;
-    btn.classList.add("filters_btn");
-    filters.appendChild(btn);
+    const btns = document.createElement("button");
+    btns.textContent = element.name.toUpperCase();
+    btns.id = element.id;
+    btns.classList.add("filters_btn_css");
+    filters.appendChild(btns);
   });
 }
 displayBtnsCat();
 
 async function filtersClick() {
   const works = await getWorks();
-  const btnsFilter = document.querySelectorAll(".filters_btn");
+  const btnsFilter = document.querySelectorAll("button");
+  const btnAll = document.querySelector(".btn-TOUS");
 
   btnsFilter.forEach((button) => {
     button.addEventListener("click", (evenement) => {
       const btnId = evenement.target.id;
       sophieGallery.innerHTML = "";
       if (btnId !== "0") {
+        btnAll.classList.remove("btn-TOUS");
+        btnAll.classList.add("filters_btn_css");
         const worksSelectCategory = works.filter((work) => {
           return work.categoryId == btnId;
         });

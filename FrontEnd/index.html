@@ -23,7 +23,6 @@
   </head>
   <body>
     <div class="containerModals">
-
       <!--modale 1-->
       <div class="modalPix">
         <div class="close">
@@ -38,7 +37,6 @@
 
         <button class="buttonAddPix">Ajouter une photo</button>
       </div>
-      
 
       <div class="modalAddImg">
         <span><i class="fa-solid fa-arrow-left"></i></span>
@@ -52,10 +50,10 @@
             <img src="#" alt="Aperçut de l'image" />
             <p>jpg,png: 4mo max</p>
           </div>
-          <label for="title">Titre</label>
+          <label class="title" for="title">Titre</label>
           <input class="txt" type="text" id="title" name="title" />
 
-          <label for="category">Catégorie</label>
+          <label class="category" for="category">Catégorie</label>
 
           <select class="txt" name="categoryId" id="category">
             <option value="1">Objets</option>
@@ -119,7 +117,8 @@
         </div>
 
         <div class="filters">
-          <button id="0" class="filters_btn">TOUS</button>
+          <button id="0" class="btn-TOUS">TOUS</button>
+          <!--class="filters_btn" à ajouter aux btns-->
         </div>
         <div class="gallery"></div>
       </section>
