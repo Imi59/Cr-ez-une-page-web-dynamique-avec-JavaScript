@@ -98,11 +98,12 @@ if (loginToken) {
 const admin = document.querySelector("#portfolio .modify");
 const containerModals = document.querySelector(".containerModals");
 const mark = document.querySelector(".fa-xmark");
-const pixModal = document.querySelector(".pixModal");
 
 function manageDisplayPixModal() {
   admin.addEventListener("click", () => {
     containerModals.style.display = "flex";
+    modale2.style.display = "none";
+    modalPix.style.display = "flex";
   });
   mark.addEventListener("click", () => {
     containerModals.style.display = "none";
@@ -153,6 +154,7 @@ function deletePix() {
       };
       fetch("http://localhost:5678/api/works/" + id, init).then((data) => {
         displayWorks();
+        displayPix();
       });
     });
   });
@@ -177,6 +179,7 @@ function displayModa2() {
   });
   markAdd.addEventListener("click", () => {
     containerModals.style.display = "none";
+    modale2.style.display = "none";
   });
 }
 
@@ -189,6 +192,15 @@ const labelFile = document.querySelector(".containerFile label");
 const iconFile = document.querySelector(".containerFile .fa-image");
 const pFile = document.querySelector(".containerFile p");
 const submitBtn = document.querySelector("#submitBtn");
+
+function checkFormCompletion() {
+  const file = inputFile.files[0]; // Récupérer le fichier sélectionné
+  const isTitleFilled = title.value.trim() !== ""; // Vérifier si le champ titre est rempli
+  const isCategorySelected = category.value !== ""; // Vérifier si une catégorie est sélectionnée
+
+  // Activer ou désactiver le bouton de soumission en fonction de l'état du formulaire
+  submitBtn.disabled = !(file && isTitleFilled && isCategorySelected);
+}
 
 // Écouteur d'événement pour le changement de fichier
 inputFile.addEventListener("change", () => {
@@ -203,8 +215,8 @@ inputFile.addEventListener("change", () => {
       labelFile.style.display = "none";
       iconFile.style.display = "none";
       pFile.style.display = "none";
-      // Activer le bouton de soumission
-      submitBtn.disabled = false;
+      // Vérifier si le formulaire est complet après le changement de fichier
+      checkFormCompletion();
     };
     // Lecture du contenu du fichier en tant que URL de données
     reader.readAsDataURL(file);
@@ -215,28 +227,23 @@ inputFile.addEventListener("change", () => {
 const form = document.querySelector("form");
 const title = document.querySelector("#title");
 const category = document.querySelector("#category");
-const errorMessage = document.querySelector("#errorMessage");
-
 // Réinitialiser la valeur de la catégorie à chaque fois que le formulaire est chargé
 category.value = "";
+
+// Écouteur d'événement pour les changements dans les champs de titre et de catégorie
+title.addEventListener("input", () => {
+  // Vérifier si le formulaire est complet après chaque changement dans le champ de titre
+  checkFormCompletion();
+});
+
+category.addEventListener("change", () => {
+  // Vérifier si le formulaire est complet après chaque changement dans le champ de catégorie
+  checkFormCompletion();
+});
 
 // Écouteur d'événement pour la soumission du formulaire
 form.addEventListener("submit", async (e) => {
   e.preventDefault(); // Empêcher le comportement par défaut de soumission du formulaire
-  errorMessage.textContent = ""; // Réinitialiser le message d'erreur
-
-  if (title.value.trim() === "") {
-    // Vérifier si le champ du titre est vide
-    errorMessage.textContent = "Veuillez saisir un titre pour votre projet.";
-    return; // Arrêter l'exécution de la fonction si le champ est vide
-  }
-
-  if (category.value === "0") {
-    // Vérifier si aucune catégorie n'a été sélectionnée
-    errorMessage.textContent =
-      "Veuillez sélectionner une catégorie pour votre projet.";
-    return; // Arrêter l'exécution de la fonction si aucune catégorie n'a été sélectionnée
-  }
 
   try {
     // Récupérer le jeton d'authentification stocké localement
@@ -259,7 +266,11 @@ form.addEventListener("submit", async (e) => {
 
     // Attendre la réponse du serveur au format JSON
     const data = await response.json();
-    console.log(data); // Afficher la réponse du serveur dans la console
+    if (response.ok) {
+      displayWorks(); // Mettre à jour l'affichage des travaux
+      displayPix(); // Mettre à jour l'affichage des images
+    }
+    // Afficher la réponse du serveur dans la console
   } catch (error) {
     console.error("Une erreur est survenue lors de l'envoi :", error.message); // Gérer les erreurs potentielles
   } finally {
