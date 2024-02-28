@@ -171,7 +171,7 @@ const modalPix = document.querySelector(".modalPix");
 const arrowleft = document.querySelector(".modalAddImg .fa-arrow-left");
 const markAdd = document.querySelector(".modalAddImg .fa-xmark");
 
-function displayModa2() {
+function displayModal2() {
   btnAddImg.addEventListener("click", () => {
     modale2.style.display = "flex";
     modalPix.style.display = "none";
@@ -186,7 +186,7 @@ function displayModa2() {
   });
 }
 
-displayModa2();
+displayModal2();
 
 // Sélection des éléments HTML pertinents
 const previewImg = document.querySelector(".containerFile img");
