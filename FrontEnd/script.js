@@ -156,6 +156,7 @@ function deletePix() {
         },
       };
       fetch("http://localhost:5678/api/works/" + id, init).then((data) => {
+        sophieGallery.innerHTML = "";
         displayWorks();
         displayPix();
       });
