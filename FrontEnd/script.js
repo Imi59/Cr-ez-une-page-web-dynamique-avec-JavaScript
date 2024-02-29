@@ -217,7 +217,7 @@ inputFile.addEventListener("change", () => {
     reader.onload = function (e) {
       // Mettre à jour l'aperçu de l'image avec le contenu du fichier choisi
       previewImg.src = e.target.result;
-      // Afficher l'aperçu de l'image et masquer les autres éléments du formulaire pour correspondre à la maquette 
+      // Afficher l'aperçu de l'image et masquer les autres éléments du formulaire pour correspondre à la maquette
       previewImg.style.display = "flex";
       labelFile.style.display = "none";
       iconFile.style.display = "none";
@@ -225,7 +225,7 @@ inputFile.addEventListener("change", () => {
       // Vérifier si le formulaire est complet après le changement de fichier
       checkFormCompletion();
     };
-    // Lecture du contenu du fichier en URL 
+    // Lecture du contenu du fichier en URL
     reader.readAsDataURL(file);
   }
 });
@@ -256,7 +256,7 @@ form.addEventListener("submit", async (e) => {
     // Récupérer le TOKEN
     const loginToken = localStorage.getItem("loginToken");
 
-    // Créer un objet FormData pour envoyer les données du formulaire A L API par la suite 
+    // Créer un objet FormData pour envoyer les données du formulaire A L API par la suite
     const formData = new FormData();
     formData.append("title", title.value);
     formData.append("category", category.value);
@@ -279,16 +279,16 @@ form.addEventListener("submit", async (e) => {
     }
     // Afficher la réponse du serveur dans la console
   } catch (error) {
-    console.error("Une erreur est survenue lors de l'envoi :", error.message); // afficher un message dans la console 
+    console.error("Une erreur est survenue lors de l'envoi :", error.message); // afficher un message dans la console
   } finally {
     // Réinitialiser les champs du formulaire après l'envoi réussi
-    title.value = ""; // Réinitialiser la valeur du champ titre
-    category.value = ""; // Réinitialiser la valeur du champ catégorie
-    previewImg.src = ""; // Réinitialiser l'aperçu de l'image
-    previewImg.style.display = "none"; // Masquer l'aperçu de l'image
-    labelFile.style.display = "block"; // Afficher à nouveau le label pour le chargement de fichier
-    iconFile.style.display = "block"; // Afficher à nouveau l'icône pour le chargement de fichier
-    pFile.style.display = "block"; // Afficher à nouveau le paragraphe pour le chargement de fichier
-    submitBtn.disabled = true; // Désactiver le bouton de soumission
+    title.value = "";
+    category.value = "";
+    previewImg.src = "";
+    previewImg.style.display = "none";
+    labelFile.style.display = "block";
+    iconFile.style.display = "block";
+    pFile.style.display = "block";
+    submitBtn.disabled = true;
   }
 });
