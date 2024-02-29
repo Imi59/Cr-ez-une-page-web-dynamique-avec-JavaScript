@@ -160,6 +160,9 @@ function deletePix() {
         displayWorks();
         displayPix();
       });
+      const figure = trash.parentNode;
+      figure.remove(); // Supprimer l'élément figure du dom
+      console.log(figure);
     });
   });
 }
@@ -189,7 +192,7 @@ function displayModal2() {
 
 displayModal2();
 
-// Sélection des éléments HTML pertinents
+// Sélection des éléments HTML dont j'ai besoin
 const previewImg = document.querySelector(".containerFile img");
 const inputFile = document.querySelector(".containerFile input");
 const labelFile = document.querySelector(".containerFile label");
@@ -199,22 +202,22 @@ const submitBtn = document.querySelector("#submitBtn");
 
 function checkFormCompletion() {
   const file = inputFile.files[0]; // Récupérer le fichier sélectionné
-  const isTitleFilled = title.value.trim() !== ""; // Vérifier si le champ titre est rempli
-  const isCategorySelected = category.value !== ""; // Vérifier si une catégorie est sélectionnée
+  const isTitleFilled = title.value.trim() !== ""; // Vérifier si le champ titre est bien rempli
+  const isCategorySelected = category.value !== ""; // Vérifier si une catégorie est bien sélectionnée
 
-  // Activer ou désactiver le bouton de soumission en fonction de l'état du formulaire
+  // Activer ou désactiver le bouton de soumission en fonction de l'état du form
   submitBtn.disabled = !(file && isTitleFilled && isCategorySelected);
 }
 
-// Écouteur d'événement pour le changement de fichier
+// Écouteur pour le changement de fichier
 inputFile.addEventListener("change", () => {
   const file = inputFile.files[0];
   if (file) {
     const reader = new FileReader();
     reader.onload = function (e) {
-      // Mettre à jour l'aperçu de l'image avec le contenu du fichier
+      // Mettre à jour l'aperçu de l'image avec le contenu du fichier choisi
       previewImg.src = e.target.result;
-      // Afficher l'aperçu de l'image et masquer les autres éléments du formulaire
+      // Afficher l'aperçu de l'image et masquer les autres éléments du formulaire pour correspondre à la maquette 
       previewImg.style.display = "flex";
       labelFile.style.display = "none";
       iconFile.style.display = "none";
@@ -222,38 +225,38 @@ inputFile.addEventListener("change", () => {
       // Vérifier si le formulaire est complet après le changement de fichier
       checkFormCompletion();
     };
-    // Lecture du contenu du fichier en tant que URL de données
+    // Lecture du contenu du fichier en URL 
     reader.readAsDataURL(file);
   }
 });
 
-// Sélection du formulaire et des éléments de formulaire pertinents
+// récupération des éléments du dom
 const form = document.querySelector("form");
 const title = document.querySelector("#title");
 const category = document.querySelector("#category");
-// Réinitialiser la valeur de la catégorie à chaque fois que le formulaire est chargé
+// Réinitialiser la catégorie à chaque fois que le formulaire est rechargé
 category.value = "";
 
-// Écouteur d'événement pour les changements dans les champs de titre et de catégorie
+// Écouteur pour les changements dans les champs de titre et de catégorie
 title.addEventListener("input", () => {
   // Vérifier si le formulaire est complet après chaque changement dans le champ de titre
   checkFormCompletion();
 });
 
 category.addEventListener("change", () => {
-  // Vérifier si le formulaire est complet après chaque changement dans le champ de catégorie
+  // Vérifier si le formulaire est complet après chaque changement dans ce champ aussi
   checkFormCompletion();
 });
 
-// Écouteur d'événement pour la soumission du formulaire
+// Écouteur pour la soumission du formulaire
 form.addEventListener("submit", async (e) => {
-  e.preventDefault(); // Empêcher le comportement par défaut de soumission du formulaire
+  e.preventDefault(); // Empêcher le comportement par défaut de rechargemen quand on soumet le formulaire
 
   try {
-    // Récupérer le jeton d'authentification stocké localement
+    // Récupérer le TOKEN
     const loginToken = localStorage.getItem("loginToken");
 
-    // Créer un objet FormData pour envoyer les données du formulaire
+    // Créer un objet FormData pour envoyer les données du formulaire A L API par la suite 
     const formData = new FormData();
     formData.append("title", title.value);
     formData.append("category", category.value);
@@ -268,7 +271,7 @@ form.addEventListener("submit", async (e) => {
       body: formData,
     });
 
-    // Attendre la réponse du serveur au format JSON
+    // Attendre la réponse de l api au format JSON
     const data = await response.json();
     if (response.ok) {
       displayWorks(); // Mettre à jour l'affichage des travaux
@@ -276,7 +279,7 @@ form.addEventListener("submit", async (e) => {
     }
     // Afficher la réponse du serveur dans la console
   } catch (error) {
-    console.error("Une erreur est survenue lors de l'envoi :", error.message); // Gérer les erreurs potentielles
+    console.error("Une erreur est survenue lors de l'envoi :", error.message); // afficher un message dans la console 
   } finally {
     // Réinitialiser les champs du formulaire après l'envoi réussi
     title.value = ""; // Réinitialiser la valeur du champ titre
