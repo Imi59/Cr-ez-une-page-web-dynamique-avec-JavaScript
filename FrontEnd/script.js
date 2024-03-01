@@ -163,7 +163,7 @@ function deletePix() {
       });
       const figure = trash.parentNode;
       figure.remove(); // Supprimer l'élément figure du dom
-      console.log(figure);
+      console.log(sophieGallery);
     });
   });
 }
