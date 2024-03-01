@@ -67,6 +67,7 @@ async function filtersClick() {
         });
       } else {
         displayWorks();
+        btnAll.classList.add("btn-TOUS");
       }
     });
   });

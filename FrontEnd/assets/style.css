@@ -294,6 +294,10 @@ footer nav ul {
   background-color: #1d6154;
   color: white;
 }
+.filters_btn_css:focus {
+  background-color: #1d6154;
+  color: white;
+}
 
 .btn-TOUS {
   background-color: #1d6154;
