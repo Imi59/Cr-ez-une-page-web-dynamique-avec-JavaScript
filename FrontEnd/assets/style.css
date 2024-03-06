@@ -461,15 +461,14 @@ hr {
 .projects {
   width: 60%;
   height: 60%;
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 0.1em;
-  justify-content: space-between;
-  margin-top: 1.5em;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-column-gap: 1em;
+  grid-row-gap: 2em;
 }
 .projects figure {
-  width: 18%;
-  height: 25%;
   position: relative;
 }
 .projects figure img {

@@ -163,7 +163,6 @@ function deletePix() {
       });
       const figure = trash.parentNode;
       figure.remove(); // Supprimer l'élément figure du dom
-      console.log(sophieGallery);
     });
   });
 }
@@ -225,38 +224,28 @@ inputFile.addEventListener("change", () => {
   }
 });
 
-// récupération des éléments du dom
 const form = document.querySelector("form");
 const title = document.querySelector("#title");
 const category = document.querySelector("#category");
-// Réinitialiser la catégorie à chaque fois que le formulaire est rechargé
-category.value = "";
+category.value = ""; 
 
-// Écouteur pour les changements dans les champs de titre et de catégorie
 title.addEventListener("input", () => {
-  // Vérifier si le formulaire est complet après chaque changement dans le champ de titre
   checkForm();
 });
 
 category.addEventListener("change", () => {
-  // Vérifier si le formulaire est complet après chaque changement dans ce champ aussi
   checkForm();
 });
 
-// Écouteur pour la soumission du formulaire
 form.addEventListener("submit", async (e) => {
-  e.preventDefault(); // Empêcher le comportement par défaut de rechargemen quand on soumet le formulaire
+  e.preventDefault();
 
   try {
-    // Récupérer le TOKEN
     const loginToken = localStorage.getItem("loginToken");
-
-    // Créer un objet FormData pour envoyer les données du formulaire A L API par la suite
     const formData = new FormData();
     formData.append("title", title.value);
     formData.append("category", category.value);
     formData.append("image", inputFile.files[0]);
-
     // Envoyer les données du formulaire au serveur via une requête POST
     const response = await fetch("http://localhost:5678/api/works", {
       method: "POST",
@@ -269,12 +258,9 @@ form.addEventListener("submit", async (e) => {
     // Attendre la réponse de l api au format JSON
     const data = await response.json();
     if (response.ok) {
-      displayWorks(); // Mettre à jour l'affichage des travaux
-      displayPix(); // Mettre à jour l'affichage des images
+      displayWorks();
+      displayPix();
     }
-    // Afficher la réponse du serveur dans la console
-  } catch (error) {
-    console.error("Une erreur est survenue lors de l'envoi :", error.message); // afficher un message dans la console
   } finally {
     // Réinitialiser les champs du formulaire après l'envoi réussi
     title.value = "";
