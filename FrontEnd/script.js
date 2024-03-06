@@ -193,7 +193,6 @@ function displayModal2() {
 
 displayModal2();
 
-// Sélection des éléments HTML dont j'ai besoin
 const previewImg = document.querySelector(".containerFile img");
 const inputFile = document.querySelector(".containerFile input");
 const labelFile = document.querySelector(".containerFile label");
@@ -201,32 +200,27 @@ const iconFile = document.querySelector(".containerFile .fa-image");
 const pFile = document.querySelector(".containerFile p");
 const submitBtn = document.querySelector("#submitBtn");
 
-function checkFormCompletion() {
-  const file = inputFile.files[0]; // Récupérer le fichier sélectionné
-  const isTitleFilled = title.value.trim() !== ""; // Vérifier si le champ titre est bien rempli
-  const isCategorySelected = category.value !== ""; // Vérifier si une catégorie est bien sélectionnée
-
-  // Activer ou désactiver le bouton de soumission en fonction de l'état du form
-  submitBtn.disabled = !(file && isTitleFilled && isCategorySelected);
+function checkForm() {
+  const file = inputFile.files[0];
+  const titleCompleted = title.value.trim() !== "";
+  const categoryCompleted = category.value !== "";
+  submitBtn.disabled = !(file && titleCompleted && categoryCompleted);
 }
 
 // Écouteur pour le changement de fichier
+
 inputFile.addEventListener("change", () => {
   const file = inputFile.files[0];
   if (file) {
     const reader = new FileReader();
     reader.onload = function (e) {
-      // Mettre à jour l'aperçu de l'image avec le contenu du fichier choisi
       previewImg.src = e.target.result;
-      // Afficher l'aperçu de l'image et masquer les autres éléments du formulaire pour correspondre à la maquette
       previewImg.style.display = "flex";
       labelFile.style.display = "none";
       iconFile.style.display = "none";
       pFile.style.display = "none";
-      // Vérifier si le formulaire est complet après le changement de fichier
-      checkFormCompletion();
+      checkForm();
     };
-    // Lecture du contenu du fichier en URL
     reader.readAsDataURL(file);
   }
 });
@@ -241,12 +235,12 @@ category.value = "";
 // Écouteur pour les changements dans les champs de titre et de catégorie
 title.addEventListener("input", () => {
   // Vérifier si le formulaire est complet après chaque changement dans le champ de titre
-  checkFormCompletion();
+  checkForm();
 });
 
 category.addEventListener("change", () => {
   // Vérifier si le formulaire est complet après chaque changement dans ce champ aussi
-  checkFormCompletion();
+  checkForm();
 });
 
 // Écouteur pour la soumission du formulaire
